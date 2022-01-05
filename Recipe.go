@@ -1,21 +1,24 @@
 package main
 
+
 type Item struct {
 	repr string;
 	isCompact bool;
 }
 
 type Recipe struct {
-	outputs map[Item]float64;
-	inputs map[Item]float64;
+	outputs ItemList;
+	inputs ItemList;
 }
 
-func GetRequiredInputs(output Item, recipe Recipe, total float64) map[Item]float64 {
+type ItemList map[Item]float64;
+
+func GetRequiredInputs(output Item, recipe Recipe, total float64) ItemList {
 	var numOfCrafts float64
-	var inputsScaled map[Item]float64
+	var inputsScaled ItemList
 
 	numOfCrafts = float64(total) / float64(recipe.outputs[output])
-	inputsScaled = make(map[Item]float64, len(recipe.inputs))
+	inputsScaled = make(ItemList, len(recipe.inputs))
 	for item, count := range recipe.inputs {
 		inputsScaled[item] = float64(float64(count) * numOfCrafts)
 	}
@@ -23,11 +26,11 @@ func GetRequiredInputs(output Item, recipe Recipe, total float64) map[Item]float
 	return inputsScaled
 }
 
-func GetCompactedInputs(input Item, output Item, recipe Recipe, total float64) map[Item]float64 {
+func GetCompactedInputs(input Item, output Item, recipe Recipe, total float64) ItemList {
 	var compactionFactor float64
-	var compactedInputs map[Item]float64
+	var compactedInputs ItemList
 
-	compactedInputs = make(map[Item]float64)
+	compactedInputs = make(ItemList)
 
 	compactionFactor = float64(recipe.inputs[output]) / float64(recipe.outputs[input])
 
@@ -62,12 +65,12 @@ func GetCompactItemRecipe(item Item) Recipe {
 	return NullRecipe
 }
 
-func GetCompactInputs(inputs map[Item]float64) (bool, map[Item]float64) {
-	var toBeCompacted, compacted map[Item]float64
+func GetCompactInputs(inputs ItemList) (bool, map[Item]float64) {
+	var toBeCompacted, compacted ItemList
 	var isFullyCompacted bool
 
-	toBeCompacted = make(map[Item]float64)
-	compacted = make(map[Item]float64)
+	toBeCompacted = make(ItemList)
+	compacted = make(ItemList)
 
 	for item, count := range inputs {
 		if item.isCompact == false {
@@ -88,7 +91,7 @@ func GetCompactInputs(inputs map[Item]float64) (bool, map[Item]float64) {
 	}
 
 	for item, count := range toBeCompacted {
-		var inputsForItem map[Item]float64
+		var inputsForItem ItemList
 		var itemCompact Item
 		var itemCompactRecipe Recipe
 
