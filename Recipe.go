@@ -38,32 +38,6 @@ func getMaterialAmountsCompact(input Item, output Item, recipe Recipe, total flo
 	return compactedMaterials
 }
 
-func GetItemCompact(item Item) Item {
-	if item == WoodPlank {
-		return WoodLog
-	} else if item == Chest {
-		return WoodPlank
-	} else if item == RedstoneDust {
-		return RedstoneBlock
-	} else if item == IronIngot {
-		return IronBlock
-	}
-	return Null
-}
-
-func GetItemRecipeCompact(item Item) Recipe {
-	if item == WoodPlank {
-		return WoodPlankRecipe
-	} else if item == Chest {
-		return ChestRecipe
-	} else if item == RedstoneDust {
-		return RedstoneDustRecipe
-	} else if item == IronIngot {
-		return IronIngotRecipe
-	}
-	return NullRecipe
-}
-
 func GetMaterialAmountsCompact(inputs ItemList) (bool, map[Item]float64) {
 	var toBeCompacted, compacted ItemList
 	var isFullyCompacted bool
