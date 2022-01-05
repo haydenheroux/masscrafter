@@ -5,7 +5,7 @@ import (
 )
 
 func TestCraftPlanks(t* testing.T) {
-	var materials map[Item]float64 = GetRequiredInputs(WoodPlank, WoodPlankRecipe, 64)
+	var materials map[Item]float64 = GetMaterialAmounts(WoodPlank, WoodPlankRecipe, 64)
 	var logs = materials[WoodLog]
 	if logs != 16.0 {
 		t.Errorf("got: %f, want: %f", logs, 16.0)
@@ -13,7 +13,7 @@ func TestCraftPlanks(t* testing.T) {
 }
 
 func TestCraftHoppers(t* testing.T) {
-	var materials map[Item]float64 = GetRequiredInputs(Hopper, HopperRecipe, 64.0)
+	var materials map[Item]float64 = GetMaterialAmounts(Hopper, HopperRecipe, 64.0)
 	var ironIngots = materials[IronIngot]
 	var chests = materials[Chest]
 	if ironIngots != 5 * 64.0 || chests != 1 * 64.0 {
@@ -22,10 +22,10 @@ func TestCraftHoppers(t* testing.T) {
 }
 
 func TestCompactCraftHoppers(t* testing.T) {
-	var materials map[Item]float64 = GetRequiredInputs(Hopper, HopperRecipe, 64)
+	var materials map[Item]float64 = GetMaterialAmounts(Hopper, HopperRecipe, 64)
 	var isFullyCompacted bool
 	for {
-		isFullyCompacted, materials = GetCompactInputs(materials)
+		isFullyCompacted, materials = GetMaterialAmountsCompact(materials)
 		if isFullyCompacted {
 			break
 		}

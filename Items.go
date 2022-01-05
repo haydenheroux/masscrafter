@@ -6,10 +6,10 @@ var Null = Item {
 }
 
 var NullRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		Null: 1,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		Null: 1,
 	},
 }

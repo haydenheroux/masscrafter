@@ -1,6 +1,5 @@
 package main
 
-
 type Item struct {
 	repr string;
 	isCompact bool;
@@ -13,7 +12,7 @@ type Recipe struct {
 
 type ItemList map[Item]float64;
 
-func GetRequiredInputs(output Item, recipe Recipe, total float64) ItemList {
+func GetMaterialAmounts(output Item, recipe Recipe, total float64) ItemList {
 	var numOfCrafts float64
 	var inputsScaled ItemList
 
@@ -26,17 +25,17 @@ func GetRequiredInputs(output Item, recipe Recipe, total float64) ItemList {
 	return inputsScaled
 }
 
-func GetCompactedInputs(input Item, output Item, recipe Recipe, total float64) ItemList {
+func getMaterialAmountsCompact(input Item, output Item, recipe Recipe, total float64) ItemList {
 	var compactionFactor float64
-	var compactedInputs ItemList
+	var compactedMaterials ItemList
 
-	compactedInputs = make(ItemList)
+	compactedMaterials = make(ItemList)
 
 	compactionFactor = float64(recipe.inputs[output]) / float64(recipe.outputs[input])
 
-	compactedInputs[output] = float64(float64(total) * compactionFactor)
+	compactedMaterials[output] = float64(float64(total) * compactionFactor)
 
-	return compactedInputs
+	return compactedMaterials
 }
 
 func GetItemCompact(item Item) Item {
@@ -52,7 +51,7 @@ func GetItemCompact(item Item) Item {
 	return Null
 }
 
-func GetCompactItemRecipe(item Item) Recipe {
+func GetItemRecipeCompact(item Item) Recipe {
 	if item == WoodPlank {
 		return WoodPlankRecipe
 	} else if item == Chest {
@@ -65,7 +64,7 @@ func GetCompactItemRecipe(item Item) Recipe {
 	return NullRecipe
 }
 
-func GetCompactInputs(inputs ItemList) (bool, map[Item]float64) {
+func GetMaterialAmountsCompact(inputs ItemList) (bool, map[Item]float64) {
 	var toBeCompacted, compacted ItemList
 	var isFullyCompacted bool
 
@@ -93,12 +92,12 @@ func GetCompactInputs(inputs ItemList) (bool, map[Item]float64) {
 	for item, count := range toBeCompacted {
 		var inputsForItem ItemList
 		var itemCompact Item
-		var itemCompactRecipe Recipe
+		var itemRecipeCompact Recipe
 
 		itemCompact = GetItemCompact(item)
-		itemCompactRecipe = GetCompactItemRecipe(item)
+		itemRecipeCompact = GetItemRecipeCompact(item)
 
-		inputsForItem = GetCompactedInputs(item, itemCompact, itemCompactRecipe, count)
+		inputsForItem = getMaterialAmountsCompact(item, itemCompact, itemRecipeCompact, count)
 		for input, inputCount := range inputsForItem {
 			_, exists := compacted[input]
 			if exists {
