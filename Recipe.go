@@ -1,13 +1,13 @@
 package main
 
-type Item struct {
-	repr string;
-	isCompact bool;
-}
-
 type Recipe struct {
 	outputs ItemList;
 	inputs ItemList;
+}
+
+type Item struct {
+	repr string;
+	isCompact bool;
 }
 
 type ItemList map[Item]float64;
