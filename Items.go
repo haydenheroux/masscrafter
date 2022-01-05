@@ -25,10 +25,10 @@ var WoodPlank = Item {
 }
 
 var WoodPlankRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		WoodPlank: 4,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		WoodLog: 1,
 	},
 }
@@ -39,10 +39,10 @@ var Chest = Item {
 }
 
 var ChestRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		Chest: 1,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		WoodPlank: 8,
 	},
 }
@@ -58,10 +58,10 @@ var RedstoneDust = Item {
 }
 
 var RedstoneDustRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		RedstoneDust: 9,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		RedstoneBlock: 1,
 	},
 }
@@ -77,10 +77,10 @@ var IronIngot = Item {
 }
 
 var IronIngotRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		IronIngot: 9,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		IronBlock: 1,
 	},
 }
@@ -91,10 +91,10 @@ var Hopper = Item {
 }
 
 var HopperRecipe = Recipe {
-	outputs: map[Item]float64 {
+	outputs: ItemList {
 		Hopper: 1,
 	},
-	inputs: map[Item]float64 {
+	inputs: ItemList {
 		IronIngot: 5,
 		Chest: 1,
 	},
