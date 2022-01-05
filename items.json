@@ -2,12 +2,12 @@
 	"null": {
 		"repr": "Null",
 		"recipe": {
-			[
+			"outputs": {
 				"null": 1
-			],
-			[
+			},
+			"inputs": {
 				"null": 1
-			]
+			}
 		}
 	},
 	"wood_log": {
@@ -16,23 +16,23 @@
 	"wood_plank": {
 		"repr": "Wood Plank",
 		"recipe": {
-			"outputs": [
+			"outputs": {
 				"wood_plank": 4
-			], 
-			"inputs": [
+			}, 
+			"inputs": {
 				"wood_log": 1
-			]
+			}
 		}
 	},
 	"chest": {
 		"repr": "Chest",
 		"recipe": {
-			"outputs": [
+			"outputs": {
 				"chest": 1
-			], 
-			"inputs": [
+			} ,
+			"inputs": {
 				"wood_plank": 8
-			]
+			}
 		}
 	},
 	"redstone_block": {
@@ -41,9 +41,9 @@
 	"redstone_dust": {
 		"repr": "Redstone Dust",
 		"recipe" : {
-			"outputs": [
+			"outputs": {
 				"redstone_dust": 9
-			],
+			},
 			"inputs": {
 				"redstone_block": 1
 			}
@@ -55,9 +55,9 @@
 	"iron_ingot": {
 		"repr": "Iron Ingot",
 		"recipe" : {
-			"outputs": [
+			"outputs": {
 				"iron_ingot": 9
-			],
+			},
 			"inputs": {
 				"iron_block": 1
 			}
@@ -66,13 +66,13 @@
 	"hopper": {
 		"repr": "Hopper",
 		"recipe": {
-			"outputs": [
+			"outputs": {
 				"hopper": 1
-			],
-			"inputs": [
+			},
+			"inputs": {
 				"iron_ingot": 5,
 				"chest": 1
-			]
+			}
 		}
 	}
 }
