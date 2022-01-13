@@ -10,17 +10,18 @@
 			}
 		}
 	},
-	"wood_log": {
-		"repr": "Wood Log"
+	"woodLog": {
+		"repr": "Wood Log",
+		"isCompact": true
 	},
-	"wood_plank": {
+	"woodPlank": {
 		"repr": "Wood Plank",
 		"recipe": {
 			"outputs": {
-				"wood_plank": 4
+				"woodPlank": 4
 			}, 
 			"inputs": {
-				"wood_log": 1
+				"woodLog": 1
 			}
 		}
 	},
@@ -31,35 +32,37 @@
 				"chest": 1
 			} ,
 			"inputs": {
-				"wood_plank": 8
+				"woodPlank": 8
 			}
 		}
 	},
-	"redstone_block": {
-		"repr": "Redstone Block"
+	"redstoneBlock": {
+		"repr": "Redstone Block",
+		"isCompact": true
 	},
-	"redstone_dust": {
+	"redstoneDust": {
 		"repr": "Redstone Dust",
 		"recipe" : {
 			"outputs": {
-				"redstone_dust": 9
+				"redstoneDust": 9
 			},
 			"inputs": {
-				"redstone_block": 1
+				"redstoneBlock": 1
 			}
 		}
 	},
-	"iron_block": {
-		"repr": "Iron Block"
+	"ironBlock": {
+		"repr": "Iron Block",
+		"isCompact": true
 	},
-	"iron_ingot": {
+	"ironIngot": {
 		"repr": "Iron Ingot",
 		"recipe" : {
 			"outputs": {
-				"iron_ingot": 9
+				"ironIngot": 9
 			},
 			"inputs": {
-				"iron_block": 1
+				"ironBlock": 1
 			}
 		}
 	},
@@ -70,7 +73,7 @@
 				"hopper": 1
 			},
 			"inputs": {
-				"iron_ingot": 5,
+				"ironIngot": 5,
 				"chest": 1
 			}
 		}
