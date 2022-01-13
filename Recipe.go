@@ -1,52 +1,49 @@
 package main
 
-type Recipe struct {
-	outputs ItemList;
-	inputs ItemList;
-}
+var AllItems = Load()
 
-type Item struct {
-	repr string;
-	isCompact bool;
-}
-
-type ItemList map[Item]float64;
-
-func GetMaterialAmounts(output Item, recipe Recipe, total float64) ItemList {
+func GetMaterialAmounts(outputItem string, total float64) ItemList {
 	var numOfCrafts float64
 	var inputsScaled ItemList
 
-	numOfCrafts = float64(total) / float64(recipe.outputs[output])
-	inputsScaled = make(ItemList, len(recipe.inputs))
-	for item, count := range recipe.inputs {
+	output := AllItems[outputItem]
+	recipe := *output.CraftRecipe
+
+	numOfCrafts = float64(total) / float64(recipe.Outputs[outputItem])
+	inputsScaled = make(ItemList, len(recipe.Inputs))
+	for item, count := range recipe.Inputs {
 		inputsScaled[item] = float64(float64(count) * numOfCrafts)
 	}
 
 	return inputsScaled
 }
 
-func getMaterialAmountsCompact(input Item, output Item, recipe Recipe, total float64) ItemList {
+func getMaterialAmountsCompact(inputItem string, outputItem string, total float64) ItemList {
 	var compactionFactor float64
 	var compactedMaterials ItemList
 
+	input := AllItems[inputItem]
+	recipe := *input.CraftRecipe
+
 	compactedMaterials = make(ItemList)
 
-	compactionFactor = float64(recipe.inputs[output]) / float64(recipe.outputs[input])
+	compactionFactor = float64(recipe.Inputs[outputItem]) / float64(recipe.Outputs[inputItem])
 
-	compactedMaterials[output] = float64(float64(total) * compactionFactor)
+	compactedMaterials[outputItem] = float64(float64(total) * compactionFactor)
 
 	return compactedMaterials
 }
 
-func GetMaterialAmountsCompact(inputs ItemList) (bool, map[Item]float64) {
+func GetMaterialAmountsCompact(inputs ItemList) (bool, ItemList) {
 	var toBeCompacted, compacted ItemList
 	var isFullyCompacted bool
 
 	toBeCompacted = make(ItemList)
 	compacted = make(ItemList)
 
+
 	for item, count := range inputs {
-		if item.isCompact == false {
+		if AllItems[item].IsCompact == false {
 			_, exists := toBeCompacted[item]
 			if exists {
 				toBeCompacted[item] += count
@@ -65,13 +62,14 @@ func GetMaterialAmountsCompact(inputs ItemList) (bool, map[Item]float64) {
 
 	for item, count := range toBeCompacted {
 		var inputsForItem ItemList
-		var itemCompact Item
-		var itemRecipeCompact Recipe
+		var itemCompact string
 
-		itemCompact = GetItemCompact(item)
-		itemRecipeCompact = GetItemRecipeCompact(item)
+		compactOutputs := AllItems[item].CraftRecipe.Inputs
+		for item := range compactOutputs {
+			itemCompact = item
+		}
 
-		inputsForItem = getMaterialAmountsCompact(item, itemCompact, itemRecipeCompact, count)
+		inputsForItem = getMaterialAmountsCompact(item, itemCompact, count)
 		for input, inputCount := range inputsForItem {
 			_, exists := compacted[input]
 			if exists {
@@ -84,7 +82,7 @@ func GetMaterialAmountsCompact(inputs ItemList) (bool, map[Item]float64) {
 
 	isFullyCompacted = true
 	for item, _ := range compacted {
-		if item.isCompact == false {
+		if AllItems[item].IsCompact == false {
 			isFullyCompacted = false
 		}
 	}
