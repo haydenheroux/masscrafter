@@ -95,4 +95,3 @@ func GetMaterialAmountsCompact(inputs ItemList) (bool, ItemList) {
 
 	return isFullyCompacted, compacted
 }
-

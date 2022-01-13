@@ -5,7 +5,7 @@ import (
 )
 
 func TestLoad(t *testing.T) {
-	allItems := Load()	
+	allItems := Load()
 
 	woodPlank := allItems["woodPlank"]
 	if woodPlank.Repr != "Wood Plank" || woodPlank.CraftRecipe.Outputs["woodPlank"] != 4.0 {

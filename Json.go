@@ -1,10 +1,9 @@
 package main
 
 import (
-	"os"
 	"encoding/json"
+	"os"
 )
-
 
 func Load() map[string]Item {
 	allItems := make(map[string]Item)
