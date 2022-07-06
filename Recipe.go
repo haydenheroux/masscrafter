@@ -5,16 +5,15 @@ var AllItems = Load()
 // GetMaterialAmounts computes the amount of items required to craft total
 // number of outputItems.
 func GetMaterialAmounts(outputItem string, total float64) ItemList {
-	output := AllItems[outputItem]
-	recipe := *output.CraftRecipe
+	recipe := AllItems[outputItem].CraftRecipe
 
 	// Compute the number of crafting interactions
-	numOfCrafts := float64(total) / float64(recipe.Outputs[outputItem])
+	numOfCrafts := total / recipe.Outputs[outputItem]
 
 	// Scale vector of items to compute the total number per item
-	inputsScaled := make(ItemList, len(recipe.Inputs))
+	inputsScaled := make(ItemList)
 	for item, count := range recipe.Inputs {
-		inputsScaled[item] = float64(float64(count) * numOfCrafts)
+		inputsScaled[item] = count * numOfCrafts
 	}
 
 	return inputsScaled
@@ -23,17 +22,16 @@ func GetMaterialAmounts(outputItem string, total float64) ItemList {
 // getMaterialAmountsCompact transforms total number of inputItems into
 // some number of the more compact item type outputItem.
 func getMaterialAmountsCompact(inputItem string, outputItem string, total float64) ItemList {
-	input := AllItems[inputItem]
-	recipe := *input.CraftRecipe
+	recipe := AllItems[inputItem].CraftRecipe
 
-	compactedMaterials := make(ItemList)
+	compactedOutputs := make(ItemList)
 
 	// TODO: Possibly pre-calculate the compaction factor
-	compactionFactor := float64(recipe.Inputs[outputItem]) / float64(recipe.Outputs[inputItem])
+	compactionFactor := recipe.Inputs[outputItem] / recipe.Outputs[inputItem]
 
-	compactedMaterials[outputItem] = float64(float64(total) * compactionFactor)
+	compactedOutputs[outputItem] = total * compactionFactor
 
-	return compactedMaterials
+	return compactedOutputs
 }
 
 func GetMaterialAmountsCompact(inputs ItemList) (bool, ItemList) {
@@ -87,7 +85,7 @@ func GetMaterialAmountsCompact(inputs ItemList) (bool, ItemList) {
 
 	// Test whether all items are fully compacted by iteration
 	isFullyCompacted := true
-	for item, _ := range compacted {
+	for item := range compacted {
 		if AllItems[item].IsCompact == false {
 			isFullyCompacted = false
 		}
