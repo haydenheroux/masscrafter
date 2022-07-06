@@ -1,59 +1,58 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
 func TestCraftPlanks(t *testing.T) {
-	var materials ItemList = GetMaterialAmounts("woodPlank", 64)
-	var logs = materials["woodLog"]
-	if logs != 16.0 {
-		t.Errorf("got: %f, want: %f", logs, 16.0)
+	gotMaterials := Materials("woodPlank", 64)
+	wantMaterials := ItemList{
+		"woodLog": 16.0,
+	}
+	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
+		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
 	}
 }
 
 func TestCraftHoppers(t *testing.T) {
-	var materials ItemList = GetMaterialAmounts("hopper", 64.0)
-	var ironIngots = materials["ironIngot"]
-	var chests = materials["chest"]
-	if ironIngots != 5*64.0 || chests != 1*64.0 {
-		t.Errorf("got: (iron ingots %f, chests %f), want: (iron ingots %f, chests %f)", ironIngots, chests, 5*64.0, 1*64.0)
+	gotMaterials := Materials("hopper", 64.0)
+	wantMaterials := ItemList{
+		"ironIngots": 5 * 64.0,
+		"chests":     64.0,
+	}
+	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
+		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
 	}
 }
 
-func TestCompactCraftHoppers(t *testing.T) {
-	var materials ItemList = GetMaterialAmounts("hopper", 64)
-	var isFullyCompacted bool
-	for {
-		isFullyCompacted, materials = GetMaterialAmountsCompact(materials)
-		if isFullyCompacted {
-			break
-		}
+func TestSimplifyCraftHoppers(t *testing.T) {
+	var gotMaterials ItemList = Materials("hopper", 64)
+	done := false
+	for !done {
+		gotMaterials, done = Simplify(gotMaterials)
 	}
-	var expectedMaterials = ItemList{
+	var wantMaterials = ItemList{
 		"ironBlock": (5.0 * 64.0) / 9.0,
 		"woodLog":   (8.0 * 64.0) / 4.0,
 	}
-	if materials["ironBlock"] != expectedMaterials["ironBlock"] || materials["woodLog"] != materials["woodLog"] {
-		t.Errorf("got: (iron blocks %f wood logs %f), want (iron blocks %f wood logs %f)", materials["ironBlock"], expectedMaterials["ironBlock"], materials["woodLog"], expectedMaterials["woodLog"])
+	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
+		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
 	}
 }
 
-func TestCompactCraftBookshelfs(t *testing.T) {
-	var materials ItemList = GetMaterialAmounts("bookshelf", 1)
-	var isFullyCompacted bool
-	for {
-		isFullyCompacted, materials = GetMaterialAmountsCompact(materials)
-		if isFullyCompacted {
-			break
-		}
+func TestSimplifyCraftBookshelfs(t *testing.T) {
+	var gotMaterials ItemList = Materials("bookshelf", 1)
+	done := false
+	for !done {
+		gotMaterials, done = Simplify(gotMaterials)
 	}
-	var expectedMaterials = ItemList{
+	var wantMaterials = ItemList{
 		"leather":   3.0,
 		"sugarcane": 9.0,
 		"woodLog":   (6.0 / 4.0),
 	}
-	if materials["leather"] != expectedMaterials["sugarcane"] || materials["sugarcane"] != expectedMaterials["sugarcane"] || materials["woodLog"] != expectedMaterials["woodLog"] {
-		t.Errorf("got: %v, want: %v", materials, expectedMaterials)
+	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
+		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
 	}
 }
