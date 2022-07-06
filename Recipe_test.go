@@ -38,3 +38,22 @@ func TestCompactCraftHoppers(t *testing.T) {
 		t.Errorf("got: (iron blocks %f wood logs %f), want (iron blocks %f wood logs %f)", materials["ironBlock"], expectedMaterials["ironBlock"], materials["woodLog"], expectedMaterials["woodLog"])
 	}
 }
+
+func TestCompactCraftBookshelfs(t *testing.T) {
+	var materials ItemList = GetMaterialAmounts("bookshelf", 1)
+	var isFullyCompacted bool
+	for {
+		isFullyCompacted, materials = GetMaterialAmountsCompact(materials)
+		if isFullyCompacted {
+			break
+		}
+	}
+	var expectedMaterials = ItemList{
+		"leather":   3.0,
+		"sugarcane": 9.0,
+		"woodLog":   (6.0 / 4.0),
+	}
+	if materials["leather"] != expectedMaterials["sugarcane"] || materials["sugarcane"] != expectedMaterials["sugarcane"] || materials["woodLog"] != expectedMaterials["woodLog"] {
+		t.Errorf("got: %v, want: %v", materials, expectedMaterials)
+	}
+}
