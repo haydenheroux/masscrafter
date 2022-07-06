@@ -6,9 +6,9 @@ type Recipe struct {
 }
 
 type Item struct {
-	Repr        string  `json:"repr"`
-	IsCompact   bool    `json:"isCompact"`
-	CraftRecipe *Recipe `json:"recipe"`
+	Repr         string `json:"repr"`
+	IsSimplified bool   `json:"isSimplified"`
+	CraftRecipe  Recipe `json:"recipe"`
 }
 
 type ItemList map[string]float64

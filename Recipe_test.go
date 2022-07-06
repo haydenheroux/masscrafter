@@ -18,8 +18,22 @@ func TestCraftPlanks(t *testing.T) {
 func TestCraftHoppers(t *testing.T) {
 	gotMaterials := Materials("hopper", 64.0)
 	wantMaterials := ItemList{
-		"ironIngots": 5 * 64.0,
-		"chests":     64.0,
+		"ironIngot": 5 * 64.0,
+		"chest":     64.0,
+	}
+	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
+		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
+	}
+}
+
+func TestSimplifyCraftIronIngots(t *testing.T) {
+	gotMaterials := Materials("ironIngot", 9*64)
+	done := false
+	for !done {
+		gotMaterials, done = Simplify(gotMaterials)
+	}
+	var wantMaterials = ItemList{
+		"ironBlock": 64.0,
 	}
 	if !reflect.DeepEqual(gotMaterials, wantMaterials) {
 		t.Errorf("got: %v, want: %v", gotMaterials, wantMaterials)
@@ -27,7 +41,7 @@ func TestCraftHoppers(t *testing.T) {
 }
 
 func TestSimplifyCraftHoppers(t *testing.T) {
-	var gotMaterials ItemList = Materials("hopper", 64)
+	gotMaterials := Materials("hopper", 64)
 	done := false
 	for !done {
 		gotMaterials, done = Simplify(gotMaterials)

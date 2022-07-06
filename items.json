@@ -12,7 +12,7 @@
 	},
 	"woodLog": {
 		"repr": "Wood Log",
-		"isCompact": true
+		"isSimplified": true
 	},
 	"woodPlank": {
 		"repr": "Wood Plank",
@@ -61,11 +61,11 @@
 	},
 	"leather": {
 		"repr": "Leather",
-		"isCompact": true
+		"isSimplified": true
 	},
 	"sugarcane": {
 		"repr": "Sugarcane",
-		"isCompact": true
+		"isSimplified": true
 	},
 	"paper" : {
 		"repr": "Paper",
@@ -104,7 +104,7 @@
 	},
 	"redstoneBlock": {
 		"repr": "Redstone Block",
-		"isCompact": true
+		"isSimplified": true
 	},
 	"redstoneDust": {
 		"repr": "Redstone Dust",
@@ -119,7 +119,7 @@
 	},
 	"ironBlock": {
 		"repr": "Iron Block",
-		"isCompact": true
+		"isSimplified": true
 	},
 	"ironIngot": {
 		"repr": "Iron Ingot",

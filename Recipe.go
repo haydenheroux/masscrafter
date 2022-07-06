@@ -7,7 +7,7 @@ func Materials(item string, amount float64) ItemList {
 	itemInfo := allItems[item]
 
 	// Handle trivial case where the item is not craftable
-	if itemInfo.IsCompact {
+	if itemInfo.IsSimplified {
 		return ItemList{
 			item: amount,
 		}
@@ -34,5 +34,31 @@ func Materials(item string, amount float64) ItemList {
 
 // Simplify returns the simplified materials required to craft the items.
 func Simplify(items ItemList) (ItemList, bool) {
-	return ItemList{}, true
+	materials := make(ItemList)
+
+	// Compute the total materials needed to craft the items
+	for item, amount := range items {
+		required := Materials(item, amount)
+
+		// Add the required materials to the totals
+		for rItem, rAmount := range required {
+			materials[rItem] += rAmount
+		}
+	}
+
+	// Flag for if the materials cannot be simplified further
+	done := true
+
+	for item, amount := range materials {
+		// Check if there is no way to craft the materials
+		// Materials will be identical if there is no other way to craft
+		required := Materials(item, amount)
+		if required[item] != amount {
+			// If the materials can be crafted from something else, not done
+			done = false
+			break
+		}
+	}
+
+	return materials, done
 }
