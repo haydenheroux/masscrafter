@@ -30,9 +30,75 @@
 		"recipe": {
 			"outputs": {
 				"chest": 1
-			} ,
+			},
 			"inputs": {
 				"woodPlank": 8
+			}
+		}
+	},
+	"stick" : {
+		"repr": "Stick",
+		"recipe": {
+			"outputs": {
+				"stick": 4
+			},
+			"inputs": {
+				"woodPlank": 2
+			}
+		}
+	},
+	"woodFence" : {
+		"repr": "Wood Fence",
+		"recipe": {
+			"outputs": {
+				"woodFence": 3
+			},
+			"inputs": {
+				"woodPlank": 4,
+				"stick": 2
+			}
+		}
+	},
+	"leather": {
+		"repr": "Leather",
+		"isCompact": true
+	},
+	"sugarcane": {
+		"repr": "Sugarcane",
+		"isCompact": true
+	},
+	"paper" : {
+		"repr": "Paper",
+		"recipe": {
+			"outputs": {
+				"paper": 3
+			},
+			"inputs": {
+				"sugarcane": 3
+			}
+		}
+	},
+	"book" : {
+		"repr": "Book",
+		"recipe": {
+			"outputs": {
+				"book": 1
+			},
+			"inputs": {
+				"paper": 3,
+				"leather": 1
+			}
+		}
+	},
+	"bookshelf" : {
+		"repr": "Bookshelf",
+		"recipe": {
+			"outputs": {
+				"bookshelf": 1
+			},
+			"inputs": {
+				"woodPlank": 6,
+				"book": 3
 			}
 		}
 	},
