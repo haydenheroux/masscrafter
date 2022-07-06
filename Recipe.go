@@ -14,15 +14,18 @@ func Materials(item string, amount float64) ItemList {
 	}
 
 	// The materials needed to craft this item
-	materials := itemInfo.CraftRecipe.Inputs
+	inputMaterials := itemInfo.CraftRecipe.Inputs
 
 	// The amount of items crafted per craft action
 	yielded := itemInfo.CraftRecipe.Outputs[item]
 	// ... and the number of times needed to craft the desired amount
 	crafts := amount / yielded
 
+	// Store required materials in here
+	materials := make(ItemList)
+
 	// Compute the materials needed to complete the desired crafts
-	for material, perCraft := range materials {
+	for material, perCraft := range inputMaterials {
 		materials[material] = perCraft * crafts
 	}
 
