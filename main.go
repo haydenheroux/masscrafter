@@ -16,6 +16,8 @@ import (
 var (
 	focusedStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#0C0C0C", Dark: "#F0F0F0"})
 	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#2F2F2F", Dark: "#DFDFDF"})
+	entryStyle   = focusedStyle.Copy().BorderStyle(lipgloss.RoundedBorder()).Padding(1).Width(40)
+	itemStyle    = entryStyle.Copy()
 	cursorStyle  = focusedStyle.Copy()
 	noStyle      = lipgloss.NewStyle()
 )
@@ -128,12 +130,16 @@ func (m *model) updateInputs(msg tea.Msg) tea.Cmd {
 }
 
 func (m model) View() string {
-	var b strings.Builder
+	var entryB strings.Builder
 
 	for i := range m.inputs {
-		b.WriteString(m.inputs[i].View())
-		b.WriteRune('\n')
+		entryB.WriteString(m.inputs[i].View())
+		if i != len(m.inputs)-1 {
+			entryB.WriteRune('\n')
+		}
 	}
+
+	entryView := entryStyle.Render(entryB.String()) + "\n"
 
 	keys := make([]string, 0, len(m.itemList))
 	for key := range m.itemList {
@@ -142,14 +148,15 @@ func (m model) View() string {
 
 	sort.Strings(keys)
 
+	var itemB strings.Builder
+
 	for _, key := range keys {
-		b.WriteString(focusedStyle.Render(key))
-		b.WriteString(blurredStyle.Render(": "))
-		b.WriteString(focusedStyle.Render(fmt.Sprint(m.itemList[key])))
-		b.WriteRune('\n')
+		s := fmt.Sprintf("%s: %f", key, m.itemList[key])
+		itemB.WriteString(itemStyle.Render(s))
+		itemB.WriteRune('\n')
 	}
 
-	return b.String()
+	return entryView + itemB.String()
 }
 
 func main() {
